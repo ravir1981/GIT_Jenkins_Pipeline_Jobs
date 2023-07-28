@@ -1,0 +1,18 @@
+node {
+    withEnv(["REQ_PY=3.10.6","AUTH=true"]) {
+        stage('Preparation') {
+            echo "Prepare for Testing"
+        }
+        stage('Code Build') {
+            echo "Build the Code"
+        }
+        stage('Python Test'){
+            echo "Test the Python code"
+        }
+        stage('Test Reporting') {
+            echo "Report the testing"
+            sh 'ls -ltr'
+            echo currentBuild.currentResult
+        }
+    }
+}
