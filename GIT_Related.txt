@@ -7,7 +7,7 @@ Ravi GIT Token
 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 (Expired after 30 days)
 
 New:
-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
+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
 
 
 Jenkins
