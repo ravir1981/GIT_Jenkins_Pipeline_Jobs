@@ -3,5 +3,23 @@ pipeline {
   environment {
     REQ_PY = '3.10.6'
   }
-  
+  stages {
+    stage ('Preparation') {
+      steps {
+        echo "Prepare Stage"
+        echo "Required Python Version is : ${env.REQ_PY}"
+      }
+    }
+    stage ('Test with Python 3.10.6') {
+      steps {
+        echo "Testing Stage"
+      }
+    }
+    stage ('Reporting Stage') {
+      steps {
+        echo "Report Stage"
+        echo "Result is : ${currentBuild.currentResult}"
+      }
+    }
+  }
 }	
