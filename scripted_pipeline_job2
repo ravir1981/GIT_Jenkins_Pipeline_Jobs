@@ -1,13 +1,25 @@
 node {
-    withEnv(["REQ_PY=3.10.6","AUTH=true"]) {
+    withEnv(["REQ_PY=3.10.4","AUTH=true"]) {
         stage('Preparation') {
             echo "Prepare for Testing"
+            env.SYS_PY = sh(returnStdout: true, script: 'python3 -V | awk \'{print $2}\'').trim()
+            echo "System Python version is : ${env.SYS_PY}"
         }
-        stage('Code Build') {
+        stage('Code Build'){
             echo "Build the Code"
+            echo "Code build stage complete"
         }
-        stage('Python Test'){
-            echo "Test the Python code"
+        if ("${env.SYS_PY}" == "${env.REQ_PY}") {
+            stage('Test Python') {
+                echo "Build the Code - If condition succeeded"
+                echo "Print the Current Working Directory"
+                sh 'pwd'
+                sh 'ls -ltr'
+                echo "Print Python Version"
+                sh 'python3 --version'
+            }
+        } else {
+            echo "Python version in system ${env.SYS_PY} is different from testing version ${env.REQ_PY}"
         }
         stage('Test Reporting') {
             echo "Report the testing"
