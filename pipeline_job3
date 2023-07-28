@@ -8,11 +8,23 @@ pipeline {
       steps {
         echo "Prepare Stage"
         echo "Required Python Version is : ${env.REQ_PY}"
+        script {
+          // any variable declaration with env inside the block can be accessed outside as well
+          env.SYS_PY = sh (returnStdout: true, script: 'python3 -V | awk \'{print $2}\'').trim()
+          echo "System Python Version is : ${env.SYS_PY}"
+        }
       }
     }
     stage ('Test with Python 3.10.6') {
+      when {
+        expression {"${env.SYS_PY}"  == "${env.REQ_PY}"}
+      }
       steps {
-        echo "Testing Stage"
+        echo "Testing Stage - when condition is met"
+        sh 'python3 -V'
+        echo "Printing present working directory"
+        sh 'pwd'
+        sh 'ls -ltr'
       }
     }
     stage ('Reporting Stage') {
