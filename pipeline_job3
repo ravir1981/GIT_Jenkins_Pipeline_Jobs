@@ -1,2 +1,7 @@
 pipeline {
+  agent any
+  environment {
+    REQ_PY = '3.10.6'
+  }
+  
 }	
