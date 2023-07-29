@@ -1,0 +1,86 @@
+1. Pre-requisites[To be done as root user]:
+https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+
+
+2. NOTE: pyenv can be installated for any user - root, or jenkins or any-other user in the system.
+Since we are going to use pyenv for jenkins jobs, it should be done for jenkins user.
+So, the Install process below, to be done for jenkins user.
+
+
+3. Login as jenkins user in the Jenkins Server:
+Login as root user first. Then the following cmd:
+   root@ubuntu20:~# su - jenkins
+   jenkins@ubuntu20:~$
+You should see this prompt, something like jenkins@ubuntu$
+And you should be in the home folder of jenkins i.e. /var/lib/jenkins
+Check with the below cmd:
+  jenkins@ubuntu20:~$ pwd
+  /var/lib/jenkins
+
+
+4. Install:
+https://github.com/pyenv/pyenv-installer :
+curl https://pyenv.run | bash
+
+Configure: Add the following to ~/.bashrc, with the cmds:
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)"\nfi' >> ~/.bashrc
+
+Verify:
+exec $SHELL
+
+Update .profile file, for jenkins user:
+Login as jenkins user and update.
+vi ~/.profile
+
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+uptime
+===========================================================================
+Jenkins Installation Ubuntu Linux Server:
+sudo -i
+sudo apt update
+sudo apt install openjdk-11-jdk -y
+Check the java version now: java -version
+Add the repository key to the system:
+ wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+Append the Debian package repository address to the server’s sources.list:
+ sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+Run update: sudo apt update
+Install jenkins now:  sudo apt install jenkins -y
+Installation is done!!
+
+Check jenkins is running:
+sudo systemctl status jenkins
+
+Alternatively you can also use this official installation info:
+https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
+
+Enable the Jenkins service to start at boot with the command:
+sudo systemctl enable jenkins
+You can start the Jenkins service with the command:
+sudo systemctl start jenkins
+
+============================
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+  xz-utils tk-dev  
+
+sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+
+
+curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
+python3 get-pip.py
+
+sudo apt-get upgrade
+Sudo apt update
+
+
+pyenv install 3.11.0
+pyenv install 3.6.15
